@@ -12,7 +12,7 @@ function gerarNumAleat() {
 
 export default function Home() {
   const [hide, setHide] = useState(false);
-  const [numAleat, setNumAleat] = useState(gerarNumAleat());
+  const [numAleat, setNumAleat] = useState(0);
   const aula = 2;
   return (
     <div>
