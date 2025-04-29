@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Personagem } from "@/components/Personagem";
 
@@ -26,6 +26,10 @@ export default function Home() {
       console.error("err:", err);
     }
   }
+
+  useEffect(() => {
+    handleBtCarregarClick(urlInicial);
+  }, []);
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
