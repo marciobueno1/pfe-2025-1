@@ -7,6 +7,6 @@ export const useStore = create(
       starWarsURL: "https://swapi.dev/api/people/?page=1",
       setStarWarsURL: (newURL) => set((state) => ({ starWarsURL: newURL })),
     }),
-    { name: "starWars-storage" }
+    { name: "starwars-storage" }
   )
 );
