@@ -3,33 +3,33 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Personagem } from "@/components/Personagem";
-
-const urlInicial = "https://swapi.dev/api/people/?page=1";
+import { useStore } from "@/zustand";
 
 export default function Home() {
+  const starWarsURL = useStore((state) => state.starWarsURL);
+  const setStarWarsURL = useStore((state) => state.setStarWarsURL);
+
   const [list, setList] = useState([]);
   const [previous, setPrevious] = useState(null);
   const [next, setNext] = useState(null);
 
-  async function handleBtCarregarClick(newURL) {
-    try {
-      const response = await fetch(newURL);
-      if (response.ok) {
-        const data = await response.json();
-        setList(data.results);
-        setPrevious(data.previous);
-        setNext(data.next);
-      } else {
-        console.error("error status", response.status, response.statusText);
-      }
-    } catch (err) {
-      console.error("err:", err);
-    }
-  }
-
   useEffect(() => {
-    handleBtCarregarClick(urlInicial);
-  }, []);
+    (async () => {
+      try {
+        const response = await fetch(starWarsURL);
+        if (response.ok) {
+          const data = await response.json();
+          setList(data.results);
+          setPrevious(data.previous);
+          setNext(data.next);
+        } else {
+          console.error("error status", response.status, response.statusText);
+        }
+      } catch (err) {
+        console.error("err:", err);
+      }
+    })();
+  }, [starWarsURL]);
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
@@ -37,18 +37,13 @@ export default function Home() {
         <h1>Personagens de Star Wars</h1>
         <p>
           <button
-            onClick={() => handleBtCarregarClick(previous)}
+            onClick={() => setStarWarsURL(previous)}
             disabled={previous == null}
           >
             Anterior
           </button>
-          <button onClick={() => handleBtCarregarClick(urlInicial)}>
-            Carregar
-          </button>
-          <button
-            onClick={() => handleBtCarregarClick(next)}
-            disabled={next == null}
-          >
+          {" | "}
+          <button onClick={() => setStarWarsURL(next)} disabled={next == null}>
             Próxima
           </button>
         </p>
