@@ -25,6 +25,12 @@ export default function Sobre() {
         >
           Home
         </Link>
+        <Link
+          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+          href="/person"
+        >
+          Star Wars
+        </Link>
       </footer>
     </div>
   );
